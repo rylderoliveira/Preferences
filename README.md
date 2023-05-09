@@ -1,25 +1,30 @@
-# Preferences
+# Hawk
 
-Estes aplicativo tem como objetivo apurar e comparar alguns métodos utilizados para salvamento de dados em memória (CACHE).
+O hawk é uma biblioteca externa para armazenamento de dados via CHAVE VALOR.
+Essa biblioteca já foi e ainda é utilizada por muitas pessoas devido sua praticidade e confiabilidade.
 
-Os métodos comparados serão:
+GitHub Hawk: https://github.com/orhanobut/hawk
 
-1. SharedPreference
-2. SharedPreference (Encrypted)
-3. Hawk
-4. Data Store Preference
-5. Data Store Proto
+Infelizmente, o projeto está parado a algum tempo, o que pode deixa-lo defasado perante às novas implementações.
 
-**Cada um dos métodos comparados será demostrado em uma branch separada conforme o nome de cada método apresentado acima.**
+# Implementação
 
-# Layout
+A implementação do Hawk é bem simples e está bem detalhada no GitHub do projeto.
 
-![image](https://github.com/rylderoliveira/Preferences/assets/69598626/317cce9c-5ac6-4275-be57-001675eccf8b)
+# Arquivo XML 
 
-O layout do projeto é bem simples e será o mesmo em todas as branchs, visto que o foco principal deste app é comparar os diferentes métodos de salvar dados no dispositivos.
+Assim como o Shared Preferences e o Shared Preferences Encrypted, o Hawk salva os dados em chave valor em um arquivo XML. No entanto, este arquivo tem um nome padrão `Hawk2`.
 
-Obs.: Estou utilizando viewBinding no projeto apenas para facilitar a localização das referências no layout sem fazer o `findViewById`.
+O arquivo XML criado pelo Hawk pode ser encontrado utilizando o `Device File Explorer` do Android Studio, seguindo o seguinte caminho:
 
-# Conclusão
+```
+data >> data >> [PACKAGE_NAME] >> shared_prefs >> Hawk2.xml
+```
 
-Para uma visão de cada método, acesse a branch do respectivo método.
+Assim como o Shared Preferences Encrypted, os dados armazenados no XML do Hawk são encriptados como mostrado no exemplo abaixo:
+
+```xml
+
+
+
+

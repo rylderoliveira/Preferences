@@ -33,7 +33,7 @@ Essa implementação pode ser encontrada [aqui](https://developer.android.com/to
 Assim como o Shared Preferences, é possível acesso o arquivo XML criado pelo `Device File Explorer` pelo caminho:
 
 ```
-data >> data >> shared_prefs >> [NOME_DO_ARQUIVO]
+data >> data >> [PACKGE_NAME] >> shared_prefs >> [NOME_DO_ARQUIVO]
 ```
 
 Neste arquivo, as chaves e os valores são encriptados conforme o modelo de encriptação descrito na criação da referência.

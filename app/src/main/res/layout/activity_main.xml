@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/edit_text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:autofillHints="Nome"
+        android:inputType="text"
+        android:labelFor="@id/edit_text_name" />
+
+    <EditText
+        android:id="@+id/edit_text_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:autofillHints="Idade"
+        android:inputType="number"
+        android:labelFor="@id/edit_text_name" />
+
+    <Button
+        android:id="@+id/button_write"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Gravar" />
+
+    <Button
+        android:id="@+id/button_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Ler" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:id="@+id/text_view_info"
+        android:text="Informações"/>
+
+    <Button
+        android:id="@+id/button_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Limpar Preferences" />
+
+
+</LinearLayout>

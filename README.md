@@ -21,7 +21,7 @@ Acesse https://developer.android.com/training/data-storage/shared-preferences?hl
 O arquivo XML criado pelo Shared Preferences pode ser encontrado utilizando o `Device File Explorer` do Android Studio, seguindo o seguinte caminho:
 
 ```
-data >> data >> shared_prefs >> [NOME_DO_ARQUIVO]
+data >> data >> [PACKAGE_NAME] >> shared_prefs >> [NOME_DO_ARQUIVO]
 ```
 
 No meu caso, o arquivo se chama `mySharedPreferences`.

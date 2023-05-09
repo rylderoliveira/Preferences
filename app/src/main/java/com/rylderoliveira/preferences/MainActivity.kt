@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.edit
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.rylderoliveira.preferences.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPreferences = getSharedPreferences("mySharedPreferences", MODE_PRIVATE)
+        val keyGenParameterSpec = MasterKeys.AES256_GCM_SPEC
+        val mainKeyAlias = MasterKeys.getOrCreate(keyGenParameterSpec)
+        sharedPreferences = EncryptedSharedPreferences.create(
+            "mySharedPreferencesEncrypted",
+            mainKeyAlias,
+            applicationContext,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
         binding.apply {
             buttonWrite.setOnClickListener {
                 savePreferences()

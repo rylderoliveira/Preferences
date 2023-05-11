@@ -1,25 +1,63 @@
-# Preferences
+# Data Store Preferences
 
-Estes aplicativo tem como objetivo apurar e comparar alguns métodos utilizados para salvamento de dados em memória (CACHE).
+O Data Store Preferences surgiu como uma alternativa menor, mais rapida e mais segura ao Shared Preferences.
+Atualmente, o Google está indicando fortemente a atualização do Shared Preferences para o Data Store Preferences, para que isso ocorra, é possivel criar uma migração entre ambas as bibliotecas de forma relativamente simples. Essa migração não foi exemplificada neste exemplo, mas pode ser encontrada na documentação do Data Store.
 
-Os métodos comparados serão:
+# Implementação
 
-1. SharedPreference
-2. SharedPreference (Encrypted)
-3. Hawk
-4. Data Store Preference
-5. Data Store Proto
+Para conseguir acessar a classe `Data Store Preferences` é preciso implementar uma biblioteca ao `build.gradle` no escopo do app.
 
-**Cada um dos métodos comparados será demostrado em uma branch separada conforme o nome de cada método apresentado acima.**
+```gradle
+// Data Store
+implementation "androidx.datastore:datastore-preferences:1.0.0"
 
-# Layout
+// Lifecycle
+implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
+```
 
-![image](https://github.com/rylderoliveira/Preferences/assets/69598626/317cce9c-5ac6-4275-be57-001675eccf8b)
+Após fazer a implementação e sincronizar o projeto, instancie o `dataStore` da seguinte forma:
 
-O layout do projeto é bem simples e será o mesmo em todas as branchs, visto que o foco principal deste app é comparar os diferentes métodos de salvar dados no dispositivos.
+```kotlin
+private val dataStore: DataStore<Preferences> by preferencesDataStore(name = "myDataStorePreferences")
+```
 
-Obs.: Estou utilizando viewBinding no projeto apenas para facilitar a localização das referências no layout sem fazer o `findViewById`.
+Acesse a classe [MainActivity.kt](app/src/main/java/com/rylderoliveira/preferences/MainActivity.kt) e verique o restante da implementação.
+
+# Arquivo de armazenamento
+
+O arquivo que armazena os dados é um `.preferences_pb`. Este arquivo armazena os dados e os organizam com chave e valor em um formato parecido com um `JSON`, conforme mostra o exemplo abaixo:
+
+```preferences_pb
+1 {
+    1: "nameKey"
+    2 {
+        5: "Rylder"
+    }
+}
+1 {
+    1: "ageKey"
+    2 {
+        1: 26
+    }
+}
+```
+Para acessar os dados, é preciso usar um editor de texto especial ou pegar as informações via linha de comando.
+A aquisição externa dos dados também não será demostrado neste exemplo.
 
 # Conclusão
 
-Para uma visão de cada método, acesse a branch do respectivo método.
+O Data Store Preferences é um método de simples implementação que utiliza todo o poder das `coroutines`, executando as ações de armazenamento em uma thread separada, não bloqueando a UI. O Data Store retorna os objetos através de um `Flow<T>` esse objeto permite executar diversas tarefas durante o fluxo de aquisição e armazenamento dos dados.
+
+No exemplo não utilizei os recursos do `Flow<T>` por não ser o foco do estudo.
+
+De forma geral, o Data Store é superior ao **Shared Preferences** e o **Shared Preferences Encrypted**.
+Abaixo está apresentado um quadro com as vantagens e desvantagens de cada método (exceto Shared Preferences Encrypted).
+
+![image](https://github.com/rylderoliveira/Preferences/assets/69598626/b0b58529-8caa-4127-aff3-24b422314c3b)
+
+**OBS.: O Shared Preferences Encrypted não é compativel com API 23 ou inferior**
+
+
+
+
+

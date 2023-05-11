@@ -1,53 +1,66 @@
 package com.rylderoliveira.preferences
 
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.edit
+import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import androidx.lifecycle.lifecycleScope
 import com.rylderoliveira.preferences.databinding.ActivityMainBinding
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var sharedPreferences: SharedPreferences
+    private val dataStore: DataStore<Person> by dataStore(
+        fileName = "personPrefs.pb",
+        serializer = PersonSerializer,
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        sharedPreferences = getSharedPreferences("mySharedPreferences", MODE_PRIVATE)
         binding.apply {
             buttonWrite.setOnClickListener {
-                savePreferences()
+                lifecycleScope.launch {
+                    savePreferences()
+                }
             }
             buttonRead.setOnClickListener {
-                showPreferences()
+                lifecycleScope.launch {
+                    showPreferences()
+                }
             }
             buttonClear.setOnClickListener {
-                clearPreferences()
+                lifecycleScope.launch {
+                    clearPreferences()
+                }
             }
         }
     }
 
-    private fun clearPreferences() {
-        sharedPreferences.edit {
-            clear()
+    private suspend fun clearPreferences() {
+        dataStore.updateData {
+            it.toBuilder().clear().build()
         }
     }
 
-    private fun showPreferences() {
-        val name = sharedPreferences.getString("nameKey", "Name default")
-        val age = sharedPreferences.getInt("ageKey", 0)
+    private suspend fun showPreferences() {
+        val name = dataStore.data.first().name
+        val age = dataStore.data.first().age
         binding.textViewInfo.text = "$name\n$age"
     }
 
-    private fun savePreferences() {
+    private suspend fun savePreferences() {
         binding.apply {
             val name = editTextName.text.toString()
             val age = editTextAge.text.toString().toInt()
-            sharedPreferences.edit {
-                putString("nameKey", name)
-                putInt("ageKey", age)
+            dataStore.updateData {
+                it.toBuilder()
+                    .setName(name)
+                    .setAge(age)
+                    .build()
             }
         }
     }
